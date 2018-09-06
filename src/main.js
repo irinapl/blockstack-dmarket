@@ -3,11 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import BootstrapVue from 'bootstrap-vue'
 
 window.blockstack = require('blockstack')
 window.axios = require('axios')
 
 Vue.config.productionTip = false
+
+Vue.use(BootstrapVue)
 
 /* eslint-disable no-new */
 new Vue({
