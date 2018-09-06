@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import router from './router'
 
 window.blockstack = require('blockstack')
 window.axios = require('axios')
@@ -10,7 +11,6 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
-})
+  router,               // Add this line
+  render: h => h(App)
+}).$mount('#app')

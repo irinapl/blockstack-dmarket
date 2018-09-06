@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <landing v-if="! blockstack.isUserSignedIn()"></landing>
-    <dashboard v-if="user" :user="user"></dashboard>
+    <div>USER SIGNED IN= {{blockstack.isUserSignedIn()}}</div>
 
-    <small class="creds">
-      Source code on <a href="https://github.com/blockstack/blockstack-todos" target="_blank">Github</a>
-    </small>
+    <landing v-if="! blockstack.isUserSignedIn()"></landing>
+    <div v-if="user" >
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
 
 import Landing from './components/Landing.vue'
-import Dashboard from './components/Dashboard.vue'
+import Ads from './components/Ads.vue'
 
 export default {
   name: 'app',
-  components: {Landing, Dashboard},
+  components: {Landing, Ads},
   mounted () {
     const blockstack = this.blockstack
     if (blockstack.isUserSignedIn()) {
