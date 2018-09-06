@@ -12,7 +12,7 @@
                           label="Tittel"
                           label-for="title">
               <b-form-input id="title"
-                            v-model="form.title"
+                            v-model="form.name"
               >
               </b-form-input>
             </b-form-group>
@@ -20,7 +20,7 @@
                           label="Beskrivelse"
                           label-for="description">
               <b-form-input id="description"
-                            v-model="form.description">
+                            v-model="form.desc">
               </b-form-input>
             </b-form-group>
             <b-form-group id="price"
@@ -44,14 +44,14 @@
 </template>
 <script>
   import { getFile, putFile } from 'blockstack'
-  const addsFileName = 'ads.json'
+  const STORAGE_FILE = 'ads.json'
   export default {
     data () {
       return {
         ads: [],
         form: {
-          title: '',
-          description: '',
+          name: '',
+          desc: '',
           price: ''
         },
         showConfirm: false
@@ -59,7 +59,7 @@
     },
     beforeCreate () {
       const options = { decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/' }
-      getFile(addsFileName, options)
+      getFile(STORAGE_FILE, options)
       .then((file) => {
         this.ads = JSON.parse(file || '[]')
         console.log('Data loaded:', this.ads)
@@ -68,13 +68,10 @@
     methods: {
       onSubmit (evt) {
         evt.preventDefault()
-        console.log(JSON.stringify(this.form))
-
         const options = { encrypt: false }
 
         this.ads.push(this.form)
-        console.log('Update file to: ', this.ads)
-        putFile(addsFileName, JSON.stringify(this.ads), options)
+        putFile(STORAGE_FILE, JSON.stringify(this.ads), options)
           .then(() => {
             console.log('DONE!!')
             this.showConfirm = true

@@ -2,11 +2,11 @@
   <div>
     <b-container fluid>
       <h1>Annonser</h1>
-      <b-card v-for="ad in ads" :title="ad.title">
+      <b-card v-for="(ad, index) in ads" :title="ad.name" :sub-title="ad.user">
         <p class="card-text">
-          {{ad.description}}
+          {{ad.desc}}
         </p>
-        <router-link :to="{ name: 'view', params: { id: ad.id }}" class="card-link">Se mer</router-link>
+        <router-link :to="{ name: 'view', params: { id: index }}" class="card-link">Se mer</router-link>
 
       </b-card>
     </b-container>
@@ -14,62 +14,62 @@
   </div>
 </template>
 <script>
+  import {lookupProfile, getFile} from 'blockstack'
 
-  var STORAGE_FILE = 'ads.json'
+  const STORAGE_FILE = 'ads.json'
 
   export default {
-    name: 'dashboard',
     props: ['user'],
     data () {
       return {
-        blockstack: window.blockstack,
-        ads: [{
-          id: 1,
-          title: 'Sykkel, nesten som ny',
-          description: 'Godt brukt sykkel',
-          price: 3500
-        },
-        {
-          id: 2,
-          title: 'Høy klorestativ',
-          description: 'Din katt vil elske denne. Høyde 170, velsig lite brukt',
-          price: 790
-        }
-        ]
+        users: [
+          'irinatest.id.blockstack',
+          'trygveaa.id.blockstack'
+        ],
+        ads: []
       }
     },
-    mounted () {
+    created () {
       this.fetchData()
     },
     methods: {
-      addTodo () {
-        if (!this.todo.trim()) {
-          return
-        }
-        this.todos.unshift({
-          id: this.uidCount++,
-          text: this.todo.trim(),
-          completed: false
-        })
-        this.todo = ''
-      },
-
       fetchData () {
-        const blockstack = this.blockstack
-        blockstack.getFile(STORAGE_FILE) // decryption is enabled by default
-          .then((todosText) => {
-            var todos = JSON.parse(todosText || '[]')
-            todos.forEach(function (todo, index) {
-              todo.id = index
-            })
-            this.uidCount = todos.length
-            this.todos = todos
-          })
+        let self = this
+        this.users.forEach(function (username) {
+          console.log('Henter profil: ' + username)
+          self.loadUserFile(username)
+        })
       },
-
-      signOut () {
-        this.blockstack.signUserOut(window.location.href)
+      loadUserFile (username) {
+        lookupProfile(username)
+          .then((profile) => {
+            console.log('JOHO profil: ', profile)
+            // let profile = new Person(profile)
+            const options = {
+              username: username,
+              decrypt: false,
+              zoneFileLookupURL: 'https://core.blockstack.org/v1/names/'
+            }
+            getFile(STORAGE_FILE, options)
+              .then((file) => {
+                let self = this
+                let usersAds = JSON.parse(file || '[]')
+                console.log('HENTET: ', usersAds)
+                usersAds.forEach(function (ad) {
+                  console.log('>>>')
+                  self.ads.push({...ad, user: username})
+                })
+                console.log('ADS: ', this.ads)
+              })
+              .catch((error) => {
+                console.log('could not fetch ads for user ' + username, error)
+              })
+          })
+          .catch((error) => {
+            console.log('could not resolve profile', error)
+          })
       }
     }
   }
+  // Array.prototype.push.apply(this.ads, Array.from(usersAds))
 </script>
