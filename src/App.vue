@@ -10,8 +10,8 @@
         <b-collapse is-nav id="nav_collapse">
           <b-navbar-nav>
             <b-nav-item to="/new">Ny annonse</b-nav-item>
-            <b-nav-item to="/favorites">Mine annonser</b-nav-item>
-            <b-nav-item to="/myads">Favoritter</b-nav-item>
+            <b-nav-item to="/myads">Mine annonser</b-nav-item>
+            <b-nav-item to="/favorites">Favoritter</b-nav-item>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
@@ -34,7 +34,7 @@
 
         </b-collapse>
       </b-navbar>
-
+      <br/>
       <router-view/>
     </div>
   </div>

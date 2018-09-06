@@ -22,11 +22,6 @@ export default new Router({
       component: NewAd
     },
     {
-      path: '/:id',
-      name: 'view',
-      component: ViewAd
-    },
-    {
       path: '/favorites',
       name: 'favorites',
       component: Favorites
@@ -35,6 +30,11 @@ export default new Router({
       path: '/myads',
       name: 'myads',
       component: MyAds
+    },
+    {
+      path: '/:id',
+      name: 'view',
+      component: ViewAd
     }
   ]
 })

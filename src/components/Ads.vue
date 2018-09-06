@@ -1,12 +1,12 @@
 <template>
   <div>
-    <br/>
     <b-container fluid>
+      <h1>Annonser</h1>
       <b-card v-for="ad in ads" :title="ad.title">
         <p class="card-text">
           {{ad.description}}
         </p>
-        <router-link to="/id" class="card-link">Se mer</router-link>
+        <router-link :to="{ name: 'view', params: { id: ad.id }}" class="card-link">Se mer</router-link>
 
       </b-card>
     </b-container>
@@ -24,11 +24,13 @@
       return {
         blockstack: window.blockstack,
         ads: [{
+          id: 1,
           title: 'Sykkel, nesten som ny',
           description: 'Godt brukt sykkel',
           price: 3500
         },
         {
+          id: 2,
           title: 'Høy klorestativ',
           description: 'Din katt vil elske denne. Høyde 170, velsig lite brukt',
           price: 790
