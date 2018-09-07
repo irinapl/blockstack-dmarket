@@ -36,7 +36,10 @@
         </b-collapse>
       </b-navbar>
       <br/>
-      <router-view/>
+      <b-container>
+        <router-view/>
+      </b-container>
+
     </div>
   </div>
 </template>

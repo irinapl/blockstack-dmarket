@@ -5,7 +5,7 @@
       <p class="card-text">
         {{ad.desc}}
       </p>
-      <router-link :to="{ name: 'view', params: { id: index }}" class="card-link">Se mer</router-link>
+      <router-link :to="{ name: 'view', params: { id: ad.index , username: ad.user }}" class="card-link">Se mer</router-link>
       <b-button variant="danger" size="sm" @click="deleteAd(index)">Delete annonse</b-button>
     </b-card>
 
@@ -31,7 +31,6 @@
     methods: {
       deleteAd (index) {
         this.ads.splice(index, 1)
-        console.log('Update file to: ', this.ads)
         const options = { encrypt: false }
         putFile(STORAGE_FILE, JSON.stringify(this.ads), options)
           .then(() => {

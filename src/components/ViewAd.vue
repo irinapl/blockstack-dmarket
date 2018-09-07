@@ -1,23 +1,41 @@
 <template>
   <div>
-    <b-card :title="ad.name"
-      :img-src="ad.image"
-      img-alt="Image"
-      img-top
-      style="max-width: 20rem;"
-      class="mb-2">
-      <p class="card-text">
-        {{ad.desc}}
-      </p>
-      <p class="card-text">
-        {{ad.price}},-
-      </p>
-    </b-card>
+    <b-container >
+      <b-row>
+        <b-col cols="8">
+          <b-card :title="ad.name"
+                  :img-src="ad.image"
+                  img-alt="Image"
+                  img-top
+                  style="max-width: 50rem;"
+                  class="mb-2">
+            <p class="card-text">
+              {{ad.desc}}
+            </p>
+            <p class="card-text">
+              {{ad.price}},-
+            </p>
+          </b-card>
+        </b-col>
+        <b-col cols="3">
+          <b-card :title="`Selger: ${adUserName}`"
+                  :img-src="adUserImage"
+                  img-top
+                  tag="article"
+                  style="max-width: 20rem;"
+                  class="mb-2">
+            <p class="card-text">
+              {{adUserDescription}}
+            </p>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-  import {lookupProfile, getFile} from 'blockstack'
+  import {lookupProfile, getFile, Person} from 'blockstack'
 
   const STORAGE_FILE = 'ads.json'
 
@@ -36,16 +54,26 @@
     created () {
       this.fetchData()
     },
+    computed: {
+      adUserImage: function () {
+        return this.adUser ? this.adUser.avatarUrl() : ''
+      },
+      adUserName: function () {
+        return this.adUser ? this.adUser.name() : this.$route.params.username
+      },
+      adUserDescription: function () {
+        return this.adUser ? this.adUser.description() : ''
+      }
+    },
     methods: {
       fetchData () {
-        let self = this
-        self.loadUserFile(this.$route.params.username)
+        this.loadUserFile(this.$route.params.username)
       },
       loadUserFile (username) {
         lookupProfile(username)
           .then((profile) => {
-            console.log('JOHO profil: ', profile)
-            // let profile = new Person(profile)
+            this.adUser = new Person(profile)
+            this.adUser.username = this.username
             const options = {
               username: username,
               decrypt: false,
