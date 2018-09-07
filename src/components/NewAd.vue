@@ -30,6 +30,13 @@
                             v-model="form.price">
               </b-form-input>
             </b-form-group>
+            <b-form-group id="image"
+                          label="Bilde"
+                          label-for="image">
+              <b-form-input id="image"
+                            v-model="form.image">
+              </b-form-input>
+            </b-form-group>
 
 
             <b-button type="submit" variant="primary">Lagre</b-button>
@@ -52,7 +59,8 @@
         form: {
           name: '',
           desc: '',
-          price: ''
+          price: '',
+          image: ''
         },
         showConfirm: false
       }

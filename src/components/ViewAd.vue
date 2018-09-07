@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card :title="ad.name"
-      img-src="https://canadatwoway.com/wp-content/uploads/2017/11/No_Image_Available.jpg"
+      :img-src="ad.image"
       img-alt="Image"
       img-top
       style="max-width: 20rem;"
