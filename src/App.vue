@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <landing v-if="! blockstack.isUserSignedIn()"></landing>
-    <div v-if="user" >
+    <div v-if="user">
 
       <b-navbar toggleable="md" type="dark" variant="info">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -21,13 +21,14 @@
               <b-form-input size="sm" class="mr-sm-2" type="text"/>
               <b-button size="sm" class="my-2 my-sm-0" type="submit">Søk</b-button>
             </b-nav-form>
-
+            <div style="width: 30px"></div>
+            <img :src="imageSource" width="50" height="50" style="border-radius: 50%;"/>
             <b-nav-item-dropdown right>
               <!-- Using button-content slot -->
               <template slot="button-content">
                 <em>{{this.user.username}}</em>
               </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item to="/profile">Profile</b-dropdown-item>
               <b-dropdown-item @click="signOut()">Signout</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
@@ -42,39 +43,46 @@
 
 <script>
 
-import Landing from './components/Landing.vue'
-import Ads from './components/Ads.vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+  import Landing from './components/Landing.vue'
+  import Ads from './components/Ads.vue'
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-export default {
-  name: 'app',
-  components: {Landing, Ads},
-  mounted () {
-    const blockstack = this.blockstack
-    if (blockstack.isUserSignedIn()) {
-      this.userData = blockstack.loadUserData()
-      this.user = new blockstack.Person(this.userData.profile)
-      this.user.username = this.userData.username
-    } else if (blockstack.isSignInPending()) {
-      blockstack.handlePendingSignIn()
-      .then((userData) => {
-        window.location = window.location.origin
-      })
-    }
-  },
-  data () {
-    return {
-      blockstack: window.blockstack,
-      user: null
-    }
-  },
-  methods: {
-    signOut () {
-      this.blockstack.signUserOut(window.location.href)
+  export default {
+    name: 'app',
+    components: {Landing, Ads},
+    mounted () {
+      const blockstack = this.blockstack
+      if (blockstack.isUserSignedIn()) {
+        this.userData = blockstack.loadUserData()
+        this.user = new blockstack.Person(this.userData.profile)
+        this.user.username = this.userData.username
+      } else if (blockstack.isSignInPending()) {
+        blockstack.handlePendingSignIn()
+          .then((userData) => {
+            window.location = window.location.origin
+          })
+      }
+    },
+    data () {
+      return {
+        blockstack: window.blockstack,
+        user: null
+      }
+    },
+    computed: {
+      // a computed getter
+      imageSource: function () {
+        return this.user.avatarUrl()
+      }
+    },
+    methods: {
+      signOut () {
+        this.blockstack.signUserOut(window.location.href)
+        this.$router.push({name: '/'})
+      }
     }
   }
-}
 </script>
 <style>
   .bg-info {

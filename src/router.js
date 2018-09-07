@@ -6,6 +6,7 @@ import NewAd from './components/NewAd.vue'
 import ViewAd from './components/ViewAd.vue'
 import MyAds from './components/MyAds.vue'
 import Favorites from './components/Favorites.vue'
+import Profile from './components/Profile.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/myads',
       name: 'myads',
       component: MyAds
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     },
     {
       path: '/:username/:id',
