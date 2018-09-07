@@ -32,7 +32,7 @@ export default new Router({
       component: MyAds
     },
     {
-      path: '/:id',
+      path: '/:username/:id',
       name: 'view',
       component: ViewAd
     }

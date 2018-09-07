@@ -27,7 +27,8 @@
       return {
         users: [
           'irinatest.id.blockstack',
-          'trygveaa.id.blockstack'
+          'trygveaa.id.blockstack',
+          'dariaf22.id.blockstack'
         ],
         ad: ''
       }
@@ -38,10 +39,7 @@
     methods: {
       fetchData () {
         let self = this
-        this.users.forEach(function (username) {
-          console.log('Henter profil: ' + username)
-          self.loadUserFile(username)
-        })
+        self.loadUserFile(this.$route.params.username)
       },
       loadUserFile (username) {
         lookupProfile(username)
