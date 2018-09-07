@@ -81,8 +81,7 @@
     },
     methods: {
       signOut () {
-        this.blockstack.signUserOut(window.location.href)
-        this.$router.push({name: '/'})
+        this.blockstack.signUserOut('/')
       }
     }
   }
