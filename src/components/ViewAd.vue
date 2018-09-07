@@ -18,7 +18,7 @@
           </b-card>
         </b-col>
         <b-col cols="3">
-          <b-card :title="`Selger: ${adUserName}`"
+          <b-card :title="`${adUserName}`"
                   :img-src="adUserImage"
                   img-top
                   tag="article"
@@ -56,10 +56,10 @@
     },
     computed: {
       adUserImage: function () {
-        return this.adUser ? this.adUser.avatarUrl() : ''
+        return this.adUser.avatarUrl ? this.adUser.avatarUrl() : ''
       },
       adUserName: function () {
-        return this.adUser ? this.adUser.name() : this.$route.params.username
+        return this.adUser ? this.adUser.name() : this.$route.params.profilename
       },
       adUserDescription: function () {
         return this.adUser ? this.adUser.description() : ''

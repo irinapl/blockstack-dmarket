@@ -6,7 +6,7 @@
         <p class="card-text">
           {{ad.desc}}
         </p>
-        <router-link :to="{ name: 'view', params: { id: ad.ind , username: ad.user }}" class="card-link">Se mer</router-link>
+        <router-link :to="{ name: 'view', params: { id: ad.ind , username: ad.user , profilename: ad.profilename}}" class="card-link">Se mer</router-link>
 
       </b-card>
     </b-container>
@@ -46,6 +46,7 @@
         lookupProfile(username)
           .then((profile) => {
             console.log('JOHO profil: ', profile)
+            console.log('profil name: ', profile.name)
             // let profile = new Person(profile)
             const options = {
               username: username,
@@ -60,7 +61,7 @@
                 console.log('HENTET: ', usersAds)
                 usersAds.forEach(function (ad) {
                   console.log('>>>')
-                  self.ads.push({...ad, user: username, ind: ind})
+                  self.ads.push({...ad, user: username, profilename: profile.name, ind: ind})
                   ind++
                 })
                 console.log('ADS: ', this.ads)
