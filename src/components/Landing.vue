@@ -1,13 +1,19 @@
 <template>
   <div class="hello">
-    <div>
-      <br/>
-      <b-jumbotron header="Dmarket" lead="Desentralisert market på Blockstack" >
-        <p></p>
-        <b-btn variant="primary" @click.prevent="signIn">Sign In With Blockstack</b-btn>
-      </b-jumbotron>
+      <div>
+          <br/>
+          <b-jumbotron border-variant="dark" style="background-color:white">
+              <div align="center">
+                  <b-img :src="require('../../static/letitgo.png')" width="100%" height="100%"/>
 
-    </div>
+                  <p>Desentralisert markedsplass på Blockstack</p>
+
+                  <p>
+                      <b-btn variant="outline-success" @click.prevent="signIn">Sign In With Blockstack</b-btn>
+                  </p>
+              </div>
+          </b-jumbotron>
+      </div>
   </div>
 </template>
 
@@ -36,5 +42,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgb(255, 88, 108) !important;
+}
+.btn-outline-success {
+  color: rgb(255, 88, 108);
+  border-color: rgb(255, 88, 108);
+}
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: rgb(255, 88, 108);
 }
 </style>

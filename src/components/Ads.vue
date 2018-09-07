@@ -6,7 +6,7 @@
         <p class="card-text">
           {{ad.desc}}
         </p>
-        <router-link :to="{ name: 'view', params: { id: ad.ind , username: ad.user}}" class="card-link">Se mer</router-link>
+        <router-link :to="{ name: 'view', params: { id: index }}" class="card-link">Se mer</router-link>
 
       </b-card>
     </b-container>
@@ -25,7 +25,8 @@
         users: [
           'irinatest.id.blockstack',
           'trygveaa.id.blockstack',
-          'dariaf22.id.blockstack'
+          'dariaf22.id.blockstack',
+          'mettelafton.id.blockstack'
         ],
         ads: []
       }
@@ -55,12 +56,10 @@
               .then((file) => {
                 let self = this
                 let usersAds = JSON.parse(file || '[]')
-                let ind = 0
                 console.log('HENTET: ', usersAds)
                 usersAds.forEach(function (ad) {
                   console.log('>>>')
-                  self.ads.push({...ad, user: username, ind: ind})
-                  ind++
+                  self.ads.push({...ad, user: username})
                 })
                 console.log('ADS: ', this.ads)
               })
