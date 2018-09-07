@@ -6,9 +6,6 @@
         <p class="card-text">
           {{ad.desc}}
         </p>
-        <p class="card-text">
-          {{ad.ind}}
-        </p>
         <router-link :to="{ name: 'view', params: { id: ad.ind , username: ad.user}}" class="card-link">Se mer</router-link>
 
       </b-card>
