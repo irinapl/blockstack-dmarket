@@ -78,3 +78,10 @@
   }
   // Array.prototype.push.apply(this.ads, Array.from(usersAds))
 </script>
+<style scoped>
+  .card-text {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+</style>
